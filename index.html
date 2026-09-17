@@ -127,27 +127,32 @@
         <button class="passport-hero__missions" id="btn-toggle-missions">Misi saya<span data-icon="chevron" id="missions-chevron" style="transform:rotate(90deg)"></span></button>
       </div>
 
-      <div class="passport-cover-stage">
-        <div class="passport-cover" id="passport-cover">
-          <img class="passport-cover__mark" src="assets/speedwork-mark.png" alt="">
-          <div class="passport-cover__clasp"></div>
-          <button class="passport-cover__next" id="btn-passport-next">Selanjutnya <span data-icon="chevron"></span></button>
-          <div class="passport-cover__foot">
-            <div class="passport-cover__wordmark">SPEED<b>PASSPORT</b></div>
-            <div class="passport-cover__name" id="passport-cover-name">-</div>
-          </div>
-        </div>
-      </div>
-
       <div class="passport-wrap" id="passport-wrap">
-        <div class="passport-board" id="passport-board">
-          <div class="passport-board__head">
-            <div class="passport-board__event" id="passport-book-event">IMOS 2026</div>
-            <div class="passport-board__sub" id="passport-book-sub">Tap stamp untuk info lebih lanjut</div>
+        <div class="passport-book" id="passport-book">
+          <div class="passport-book__page passport-book__page--cover is-current" id="book-page-cover">
+            <img class="passport-cover__mark" src="assets/speedwork-mark.png" alt="">
+            <div class="passport-cover__clasp"></div>
+            <div class="passport-cover__foot">
+              <div class="passport-cover__wordmark">SPEED<b>PASSPORT</b></div>
+              <div class="passport-cover__name" id="passport-cover-name">-</div>
+            </div>
           </div>
-          <div class="stamp-grid" id="stamp-grid"></div>
+          <div class="passport-book__page passport-book__page--stamps" id="book-page-stamps">
+            <div class="passport-board" id="passport-board">
+              <div class="passport-board__head">
+                <div class="passport-board__event" id="passport-book-event">IMOS 2026</div>
+                <div class="passport-board__sub" id="passport-book-sub">Tap stamp untuk info lebih lanjut</div>
+              </div>
+              <div class="stamp-grid" id="stamp-grid"></div>
+            </div>
+          </div>
         </div>
         <div class="passport-ribbon" id="passport-ribbon" style="display:none">Event Selesai</div>
+      </div>
+
+      <div class="passport-book-nav" id="passport-book-nav">
+        <button class="passport-book-nav__btn" id="btn-book-prev" disabled><span data-icon="chevron" style="transform:rotate(180deg)"></span> Sebelumnya</button>
+        <button class="passport-book-nav__btn" id="btn-book-next">Selanjutnya <span data-icon="chevron"></span></button>
       </div>
 
       <div class="scan-cta" id="open-scanner">

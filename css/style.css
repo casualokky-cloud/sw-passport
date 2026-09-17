@@ -335,45 +335,45 @@ button { font-family: inherit; }
 }
 .passport-hero__missions[aria-expanded="true"] #missions-chevron { transform: rotate(-90deg) !important; }
 
-.passport-cover-stage { margin-top: 18px; }
-.passport-cover {
-  position: relative; overflow: hidden;
+/* ---------- Passport book: cover page <-> stamp page, same card frame ---------- */
+
+.passport-book { position: relative; display: grid; }
+.passport-book__page {
+  grid-area: 1 / 1;
+  border-radius: var(--r-24);
+  overflow: hidden;
+  position: relative;
+  transform-origin: left center;
+  transition: transform .55s cubic-bezier(.5,0,.25,1), opacity .5s ease;
+  transform: scaleX(.12) rotate(-9deg) translateX(-58%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.passport-book__page.is-current { transform: none; opacity: 1; pointer-events: auto; z-index: 2; }
+.passport-book__page::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.4), transparent 45%);
+  opacity: 0; transition: opacity .5s ease;
+}
+.passport-book__page:not(.is-current)::before { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .passport-book__page { transition: none; }
+}
+
+.passport-book__page--cover {
   padding: 20px 18px 34px;
   min-height: 190px;
-  border-radius: var(--r-24);
   background: radial-gradient(120% 140% at 100% 0%, var(--brand-light) 0%, var(--brand-dark) 70%);
   box-shadow: var(--shadow-card);
   cursor: pointer;
-  transform-origin: left center;
 }
-.passport-cover::after {
+.passport-book__page--cover::after {
   content: ""; position: absolute; right: -30px; top: -20px; width: 200px; height: 200px;
   background:
     repeating-conic-gradient(from 0deg, rgba(255,255,255,.07) 0deg 8deg, transparent 8deg 24deg);
   border-radius: 50%;
   pointer-events: none;
-}
-.passport-cover.is-opening {
-  animation: passportBookOpen .6s cubic-bezier(.5,0,.25,1) forwards;
-}
-.passport-cover.is-opening::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(90deg, rgba(0,0,0,.45), transparent 45%);
-  animation: passportShadowFade .6s ease forwards;
-}
-@keyframes passportBookOpen {
-  0% { transform: none; opacity: 1; }
-  55% { transform: scaleX(.8) rotate(-3deg) translateX(-8%); opacity: 1; }
-  100% { transform: scaleX(.12) rotate(-9deg) translateX(-58%); opacity: 0; }
-}
-@keyframes passportShadowFade {
-  0% { opacity: 0; }
-  55% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .passport-cover.is-opening,
-  .passport-cover.is-opening::before { animation: none; }
 }
 .passport-cover__mark { position: relative; width: 46px; height: 46px; display: block; }
 .passport-cover__clasp {
@@ -393,13 +393,15 @@ button { font-family: inherit; }
 .passport-cover__name {
   font-size: 12px; color: rgba(255,255,255,.85); margin-top: 2px; letter-spacing: .08em; text-transform: uppercase;
 }
-.passport-cover__next {
-  position: absolute; right: 16px; bottom: -16px;
+
+.passport-book-nav { display: flex; justify-content: space-between; margin-top: 14px; }
+.passport-book-nav__btn {
   display: flex; align-items: center; gap: 6px;
   border: none; border-radius: 999px; padding: 9px 16px;
-  background: #fff; color: var(--btn-green-label);
-  font-weight: 600; font-size: 12.5px; box-shadow: 0 6px 16px rgba(0,0,0,.16); cursor: pointer;
+  background: var(--tint-green-1); color: var(--brand-dark);
+  font-weight: 600; font-size: 12.5px; cursor: pointer;
 }
+.passport-book-nav__btn:disabled { opacity: .4; cursor: default; }
 
 /* ---------- SpeedPassport board (the passport page) ---------- */
 
