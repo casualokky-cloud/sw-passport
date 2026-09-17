@@ -23,6 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache-bust CSS/JS so browsers always fetch the latest deploy
+        run: |
+          SHA_SHORT=$(git rev-parse --short HEAD)
+          sed -i "s/css\/style\.css\"/css\/style.css?v=$SHA_SHORT\"/" index.html staff.html
+          sed -i "s/js\/app\.js\"/js\/app.js?v=$SHA_SHORT\"/" index.html staff.html
+          sed -i "s/js\/customer\.js\"/js\/customer.js?v=$SHA_SHORT\"/" index.html
+          sed -i "s/js\/staff\.js\"/js\/staff.js?v=$SHA_SHORT\"/" staff.html
+
       - name: Upload site as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
