@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PIC Scanner — Speedwork Autocare</title>
+<title>PIC Booth Console — SpeedPassport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
   body{ align-items:flex-start; }
@@ -14,29 +17,41 @@
 <div class="staff-page">
   <div class="staff-wrap">
     <div class="staff-header">
-      <img src="assets/speedwork-logo.png" alt="Speedwork Autocare">
-      <div class="staff-header__title"><strong>PIC Scanner</strong><span>SW Passport Staff Console</span></div>
+      <img src="assets/speedwork-logo.png" alt="SpeedApp">
+      <div class="staff-header__title"><strong>PIC Booth Console</strong><span>SpeedPassport</span></div>
     </div>
 
-    <div class="scanner-box" id="scanner-box">
-      <video id="scanner-video" autoplay playsinline muted></video>
-      <div class="scanner-box__frame"></div>
-      <div class="scanner-box__scanline"></div>
-      <div class="scanner-box__idle" id="scanner-idle">
-        <span data-icon="camera"></span>
-        <div>Camera not started</div>
+    <div class="reveal-box">
+      <div class="section-title" style="margin:0 0 12px">Reveal QR Booth</div>
+      <div class="sheet__desc" style="margin-bottom:14px">
+        Verifikasi dulu aktivitas customer sudah selesai, baru reveal QR-nya —
+        QR booth disembunyikan secara default (BRD 4.2-C).
+      </div>
+
+      <div id="reveal-form">
+        <label for="reveal-event">Event</label>
+        <select id="reveal-event"></select>
+        <label for="reveal-stamp">Stamp / Aktivitas</label>
+        <select id="reveal-stamp"></select>
+        <button class="btn btn--primary" id="btn-reveal"><span data-icon="scan"></span> Reveal QR ke Customer</button>
+      </div>
+
+      <div class="reveal-qr" id="reveal-qr-box" style="display:none">
+        <canvas id="reveal-qr-canvas"></canvas>
+        <div class="reveal-qr__timer" id="reveal-timer">01:30</div>
+        <div class="reveal-qr__hint">Tunjukkan layar ini ke customer untuk di-scan</div>
+        <button class="btn btn--outline" id="btn-hide-reveal" style="margin-top:14px">Sembunyikan QR</button>
       </div>
     </div>
-    <button class="btn btn--primary" id="btn-start-scan"><span data-icon="scan"></span> START SCANNING</button>
 
     <div class="pending-list">
-      <div class="section-title" style="margin-top:22px"><span data-icon="bell"></span> Menunggu Discan (<span id="pending-count">0</span>)</div>
+      <div class="section-title" style="margin-top:22px"><span data-icon="bell"></span> QR Aktif Menunggu Di-scan (<span id="pending-count">0</span>)</div>
       <div id="pending-items"></div>
-      <div class="empty-hint" id="pending-empty">Belum ada customer yang menunjukkan QR. Buka SW Passport (index.html) di tab/HP lain lalu tekan "Tunjukkan QR ke Staff".</div>
+      <div class="empty-hint" id="pending-empty">Belum ada QR yang di-reveal. Pilih event &amp; stamp di atas lalu tekan "Reveal QR ke Customer".</div>
     </div>
 
     <div class="manual-box">
-      <div class="section-title" style="margin:0 0 12px">Aktivasi Manual</div>
+      <div class="section-title" style="margin:0 0 12px">Aktivasi Manual (fallback)</div>
       <label for="manual-gtid">Pilih Customer (SW.ID)</label>
       <select id="manual-gtid"></select>
       <label for="manual-event">Pilih Event</label>
@@ -44,6 +59,9 @@
       <label for="manual-stamp">Pilih Stamp</label>
       <select id="manual-stamp"></select>
       <button class="btn btn--outline btn--block" id="btn-manual-activate">Aktifkan Stamp</button>
+      <div class="handoff-note" id="manual-handoff-note" style="display:none">
+        🎁 Reward stamp ini fisik — pastikan barang sudah diserahkan ke customer.
+      </div>
     </div>
 
     <div class="log-list">

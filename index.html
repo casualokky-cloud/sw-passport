@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SW Passport — Speedwork Autocare</title>
+<title>SpeedPassport — SpeedApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,17 +17,16 @@
   <section class="screen is-active" id="screen-login">
     <div class="login">
       <div>
-        <div class="login__dots"><span></span><span></span><span></span><span></span></div>
-        <h1 class="login__title">SW Passport</h1>
-        <p class="login__subtitle">Kumpulkan stempel digital di setiap aktivitas Speedwork Autocare &amp; raih hadiahnya.</p>
+        <h1 class="login__title">SpeedPassport</h1>
+        <p class="login__subtitle">Kumpulkan stamp di setiap aktivitas booth &amp; dapatkan hadiahnya di SpeedApp.</p>
       </div>
 
-      <div class="login__badge"><img src="assets/speedwork-mark.png" alt="" style="width:78px;height:78px;object-fit:contain;filter:brightness(0) invert(1);opacity:.9"></div>
+      <div class="login__badge"><img src="assets/speedwork-mark.png" alt=""></div>
 
       <div class="login__foot">
         <label class="login__terms">
           <input type="checkbox" id="tnc-check">
-          <span>Saya setuju dengan <u id="tnc-link">Syarat dan Ketentuan</u> SW Passport.</span>
+          <span>Saya setuju dengan <u id="tnc-link">Syarat dan Ketentuan</u> SpeedPassport.</span>
         </label>
         <button class="btn--google" id="btn-google" disabled>
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.56 2.7-3.87 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.98v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.98A9 9 0 0 0 0 9c0 1.45.35 2.83.98 4.03l2.97-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .98 4.97L3.95 7.3C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
@@ -37,8 +39,9 @@
   <!-- ================= HOME ================= -->
   <section class="screen" id="screen-home">
     <div class="topbar">
-      <div class="topbar__brand"><img src="assets/speedwork-logo.png" alt="Speedwork Autocare"></div>
-      <button class="topbar__back" id="btn-notif-bell" title="Notifikasi"><span data-icon="bell"></span></button>
+      <div class="topbar__brand"><img src="assets/speedwork-logo.png" alt="SpeedApp"></div>
+      <button class="topbar__icon-btn" id="btn-cart" title="Keranjang"><span data-icon="cart"></span></button>
+      <button class="topbar__icon-btn" id="btn-notif-bell" title="Notifikasi"><span data-icon="bell"></span></button>
     </div>
     <div class="screen__scroll">
       <div class="profile-card" id="profile-card">
@@ -50,11 +53,18 @@
         <div class="profile-card__chevron"><span data-icon="chevron"></span></div>
       </div>
 
+      <div class="menu-grid">
+        <div class="menu-grid__item" id="menu-ban"><span class="menu-grid__icon" data-icon-color="tire"></span>Ban</div>
+        <div class="menu-grid__item" id="menu-oli"><span class="menu-grid__icon" data-icon-color="oil"></span>Oli</div>
+        <div class="menu-grid__item" id="menu-servis"><span class="menu-grid__icon" data-icon-color="wrench"></span>Servis Lainnya</div>
+        <div class="menu-grid__item" id="menu-bengkel"><span class="menu-grid__icon" data-icon-color="garage"></span>Bengkel</div>
+      </div>
+
       <div class="banner" id="banner-install">
         <div class="banner__icon"><span data-icon="download"></span></div>
         <div>
           <div class="banner__title">Install Aplikasi</div>
-          <div class="banner__desc">Tambahkan SW Passport ke HP Anda.</div>
+          <div class="banner__desc">Tambahkan SpeedApp ke HP Anda.</div>
         </div>
         <div class="banner__action">
           <button class="btn btn--pill-sm" id="btn-install">Install</button>
@@ -66,45 +76,33 @@
         <div class="banner__icon"><span data-icon="bell"></span></div>
         <div>
           <div class="banner__title">Notifikasi</div>
-          <div class="banner__desc">Terima update passport di HP ini.</div>
+          <div class="banner__desc">Terima update SpeedPassport di HP ini.</div>
         </div>
         <div class="banner__action">
           <button class="btn btn--pill-sm" id="btn-notif">Aktifkan</button>
         </div>
       </div>
 
-      <div class="progress-block">
-        <div class="progress-block__head">
-          <div class="progress-block__label">Progres Stamp</div>
-          <div class="progress-block__count"><span id="home-progress-num">0/9</span><br><small>Stamp Terkumpul</small></div>
+      <!-- Section/Progress stamp — homepage entry point into SpeedPassport -->
+      <div class="progress-strip" id="open-passport">
+        <div class="progress-strip__body">
+          <div class="progress-strip__rays"></div>
+          <div class="progress-strip__row">
+            <span class="progress-strip__label">Progress stamp</span>
+            <span class="progress-strip__count" id="home-progress-num">1 dari 9</span>
+          </div>
+          <div class="progress-strip__bar">
+            <div class="progress-strip__fill" id="home-progress-fill" style="width:0%"></div>
+          </div>
         </div>
-        <div class="progress-bar"><div class="progress-bar__fill" id="home-progress-fill" style="width:0%"></div></div>
-      </div>
-
-      <div class="section-title" style="margin-top:20px">Event Aktif</div>
-      <div class="passport-cover" id="open-passport">
-        <div class="passport-cover__label" id="active-event-label">SPEEDWORK AUTOCARE</div>
-        <div class="passport-cover__title" id="active-event-title">SW Passport 2026</div>
-        <div class="passport-cover__badge" id="passport-cover-mark"></div>
-        <div class="passport-cover__foot"><span>Buka Passport</span><span data-icon="chevron"></span></div>
+        <div class="progress-strip__cta">
+          <span>Misi saya</span>
+          <span data-icon="chevron" style="transform:rotate(90deg)"></span>
+        </div>
       </div>
 
       <div class="section-title">Riwayat Event</div>
       <div id="event-history-list" class="stamplist" style="margin-top:0"></div>
-
-      <div class="section-title"><span data-icon="id"></span> Menu Cepat</div>
-      <div class="stamplist" style="margin-top:0">
-        <div class="stampitem" id="quick-area">
-          <div class="stampitem__num"><span data-icon-color="area"></span></div>
-          <div><div class="stampitem__name">Cari Bengkel Terdekat</div><div class="stampitem__desc">Lihat lokasi booth &amp; bengkel mitra</div></div>
-          <div class="stampitem__status" style="border:none"><span data-icon="chevron"></span></div>
-        </div>
-        <div class="stampitem" id="quick-gallery">
-          <div class="stampitem__num"><span data-icon-color="gallery"></span></div>
-          <div><div class="stampitem__name">Galeri &amp; Promo</div><div class="stampitem__desc">Katalog produk &amp; keseruan event</div></div>
-          <div class="stampitem__status" style="border:none"><span data-icon="chevron"></span></div>
-        </div>
-      </div>
     </div>
     <div class="bottomnav" data-nav></div>
   </section>
@@ -113,32 +111,39 @@
   <section class="screen" id="screen-passport">
     <div class="topbar">
       <button class="topbar__back" data-go="screen-home"><span data-icon="back"></span></button>
-      <div class="topbar__title" id="passport-topbar-title">SW Passport</div>
+      <div class="topbar__title" id="passport-topbar-title">SpeedPassport</div>
       <button class="btn btn--pill-sm" id="btn-switch-event" style="margin-left:auto">Ganti Event</button>
     </div>
     <div class="screen__scroll">
       <div class="event-status" id="event-status-banner" style="display:none">
         <span data-icon="check"></span> <span id="event-status-text">Event ini sudah selesai</span>
       </div>
-      <div class="passport-book-wrap">
-        <div class="passport-book" id="passport-book">
-          <div class="passport-book__head">
-            <div class="passport-book__event" id="passport-book-event">SPEEDWORK SERVICE PASSPORT 2026</div>
-            <div class="passport-book__sub" id="passport-book-sub">Ikuti alur di bawah &amp; kumpulkan seluruh stempel</div>
+
+      <div class="passport-wrap">
+        <div class="passport-board" id="passport-board">
+          <div class="passport-board__head">
+            <div class="passport-board__event" id="passport-book-event">IMOS 2026</div>
+            <div class="passport-board__sub" id="passport-book-sub">Tap stamp untuk info lebih lanjut</div>
           </div>
-          <div class="stampmap" id="stampmap">
-            <svg class="connectors" id="stampmap-svg"></svg>
-          </div>
+          <div class="stamp-grid" id="stamp-grid"></div>
         </div>
         <div class="passport-ribbon" id="passport-ribbon" style="display:none">Event Selesai</div>
       </div>
 
-      <div class="viewtabs">
-        <button class="is-active" id="tab-map" data-view="map">Peta Perjalanan</button>
-        <button id="tab-list" data-view="list">Daftar Stamp</button>
+      <div class="scan-cta" id="open-scanner">
+        <div class="scan-cta__icon"><span data-icon="scan"></span></div>
+        <div>
+          <div class="scan-cta__title">Scan QR di Booth</div>
+          <div class="scan-cta__desc" id="scan-cta-desc">Tunjukkan ke PIC, lalu scan QR yang mereka tampilkan</div>
+        </div>
       </div>
 
-      <div class="stamplist" id="stamplist" style="display:none"></div>
+      <div class="viewtabs">
+        <button class="is-active" id="tab-map" data-view="map">Papan Stamp</button>
+        <button id="tab-list" data-view="list">Misi Saya</button>
+      </div>
+
+      <div class="mission-list" id="mission-list" style="display:none"></div>
     </div>
     <div class="bottomnav" data-nav></div>
   </section>
@@ -150,7 +155,7 @@
       <div class="topbar__title">Area &amp; Lokasi</div>
     </div>
     <div class="screen__scroll">
-      <div class="map-placeholder">Peta lokasi booth &amp; bengkel mitra Speedwork Autocare<br>(ilustrasi — data contoh)</div>
+      <div class="map-placeholder">Peta lokasi booth &amp; bengkel mitra Speedwork<br>(ilustrasi — data contoh)</div>
       <div id="branch-list"></div>
     </div>
     <div class="bottomnav" data-nav></div>
@@ -168,7 +173,7 @@
     <div class="bottomnav" data-nav></div>
   </section>
 
-  <!-- ================= PROFILE / GT.ID ================= -->
+  <!-- ================= PROFILE / SW.ID ================= -->
   <section class="screen" id="screen-profile">
     <div class="topbar">
       <button class="topbar__back" data-go="screen-home"><span data-icon="back"></span></button>
@@ -190,43 +195,76 @@
     <div class="bottomnav" data-nav></div>
   </section>
 
-  <!-- ============ OVERLAY: stamp detail / QR ============ -->
+  <!-- ============ OVERLAY: mission detail ============ -->
   <div class="overlay" id="overlay-stamp">
     <div class="sheet">
       <button class="sheet__close" data-close-overlay><span data-icon="close"></span></button>
-      <div id="stampdetail-icon" style="width:44px;height:44px;border-radius:12px;background:var(--green-pale);color:var(--green-dark);display:flex;align-items:center;justify-content:center;margin-bottom:10px"></div>
+      <div class="mission-detail__badge" id="stampdetail-icon"></div>
       <div class="sheet__title" id="stampdetail-title">Stamp</div>
       <div class="sheet__desc" id="stampdetail-desc">-</div>
+      <div class="reward-tag" id="stampdetail-reward"></div>
 
       <div id="stampdetail-todo">
-        <button class="btn btn--primary" id="btn-show-qr">Tunjukkan QR ke Staff</button>
-      </div>
-
-      <div id="stampdetail-qr" class="qrbox" style="display:none">
-        <canvas id="qr-canvas"></canvas>
-        <div class="qrbox__id" id="qr-gtid">SW.ID-000000</div>
-        <div class="qrbox__hint">Tunjukkan QR ini ke staff Speedwork di lokasi</div>
-        <div class="qrbox__status"><span class="dot-pulse"></span><span id="qr-status-text">Menunggu discan staff…</span></div>
+        <button class="btn btn--primary" id="btn-show-qr"><span data-icon="scan"></span> Scan QR di Booth</button>
       </div>
 
       <div id="stampdetail-done" style="display:none;text-align:center;padding:6px 0">
-        <div style="color:var(--green-dark);font-weight:800;font-size:14px"><span data-icon="check"></span> Stamp sudah diklaim</div>
+        <div style="color:var(--btn-green-label);font-weight:700;font-size:14px"><span data-icon="check"></span> Stamp sudah diklaim</div>
       </div>
 
       <div id="stampdetail-closed" style="display:none;text-align:center;padding:6px 0">
-        <div style="color:var(--ink-soft);font-weight:700;font-size:13px">Event ini sudah selesai — stempel tidak bisa diklaim lagi.</div>
+        <div style="color:var(--color-text-subtitle);font-weight:600;font-size:13px">Event ini sudah selesai — stempel tidak bisa diklaim lagi.</div>
       </div>
     </div>
   </div>
 
-  <!-- ============ OVERLAY: stamp claimed success ============ -->
-  <div class="overlay" id="overlay-success">
+  <!-- ============ OVERLAY: in-app QR scanner (customer scans the booth's QR) ============ -->
+  <div class="overlay" id="overlay-scanner">
     <div class="sheet">
-      <div class="stampdone">
-        <div class="stampdone__seal" id="success-seal"></div>
-        <div class="stampdone__title" id="success-title">Stamp berhasil diklaim!</div>
-        <div class="stampdone__desc" id="success-desc">Progres passport kamu bertambah.</div>
-        <button class="btn btn--primary" data-close-overlay>Lanjutkan</button>
+      <button class="sheet__close" data-close-overlay><span data-icon="close"></span></button>
+      <div class="sheet__title">Scan QR Booth</div>
+      <div class="sheet__desc">Arahkan kamera ke QR yang ditunjukkan PIC di booth. Pastikan kamu berada di lokasi booth.</div>
+
+      <div class="geo-status is-checking" id="geo-status">
+        <span class="dot-pulse"></span><span id="geo-status-text">Memeriksa lokasi kamu…</span>
+      </div>
+
+      <div class="scanner-view" id="scanner-view">
+        <video id="scanner-video" autoplay playsinline muted></video>
+        <div class="scanner-view__frame"></div>
+        <div class="scanner-view__scanline"></div>
+        <div class="scanner-view__idle" id="scanner-idle">
+          <span data-icon="camera"></span>
+          <div>Kamera belum aktif</div>
+        </div>
+      </div>
+      <button class="btn btn--primary" id="btn-start-scanner"><span data-icon="scan"></span> Mulai Scan</button>
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY: stamp claimed success (ModalSpeedPassport) ============ -->
+  <div class="overlay" id="overlay-success">
+    <div class="sheet award-sheet">
+      <div class="award-sheet__wash">
+        <div class="award-sheet__rings">
+          <div class="ring" style="width:377px;height:377px;left:-9px;top:30px;opacity:.05"></div>
+          <div class="ring" style="width:289px;height:289px;left:35px;top:74px;opacity:.08"></div>
+          <div class="ring" style="width:201px;height:201px;left:79px;top:118px;opacity:.12"></div>
+        </div>
+        <div class="award-sheet__content">
+          <div class="award-sheet__seal" id="success-seal"></div>
+          <div class="award-sheet__title">Stamp Berhasil Didapat!</div>
+          <div class="award-sheet__body">Satu stamp baru sudah masuk ke koleksi kamu. Yuk lanjut kumpulkan stamp berikutnya</div>
+          <div class="next-stamp-card" id="next-stamp-card">
+            <div class="next-stamp-card__badge" id="next-stamp-badge"></div>
+            <div class="next-stamp-card__text">
+              <div class="next-stamp-card__label">Stamp berikutnya</div>
+              <div class="next-stamp-card__value" id="next-stamp-name">-</div>
+            </div>
+            <div class="next-stamp-card__arrow"><span data-icon="chevron"></span></div>
+          </div>
+          <button class="btn btn--primary" data-close-overlay>Lanjutkan</button>
+        </div>
       </div>
     </div>
   </div>
@@ -236,7 +274,7 @@
     <div class="sheet">
       <button class="sheet__close" data-close-overlay><span data-icon="close"></span></button>
       <div class="sheet__title">Pilih Event</div>
-      <div class="sheet__desc">Passport dipakai untuk semua event offline Speedwork Autocare. Pilih event untuk lihat progres stempelnya.</div>
+      <div class="sheet__desc">SpeedPassport dipakai untuk semua event offline. Pilih event untuk lihat progres stempelnya.</div>
       <div id="event-switch-list" class="stamplist" style="margin-top:0"></div>
     </div>
   </div>
@@ -247,8 +285,8 @@
       <button class="sheet__close" data-close-overlay><span data-icon="close"></span></button>
       <div class="sheet__title">Syarat &amp; Ketentuan</div>
       <div class="sheet__desc">
-        Ini adalah demo aplikasi gamifikasi SW Passport untuk Speedwork Autocare.
-        Dengan melanjutkan, kamu setuju data nama &amp; progres stamp disimpan secara lokal
+        Ini adalah demo aplikasi gamifikasi SpeedPassport untuk SpeedApp.
+        Dengan melanjutkan, kamu setuju data nama, lokasi, &amp; progres stamp disimpan secara lokal
         di perangkat/browser ini untuk keperluan simulasi program passport.
       </div>
       <button class="btn btn--primary" data-close-overlay>Mengerti</button>
