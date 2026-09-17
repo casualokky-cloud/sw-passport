@@ -26,6 +26,8 @@
   let currentEventId = null; // which event's passport is currently open
   let scanPollTimer = null;
   let cameraStream = null;
+  let coverAutoTimer = null;
+  let coverIsOpen = false; // has the passport cover already played its open animation this visit
 
   function q(sel, root) { return (root || document).querySelector(sel); }
   function qa(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
@@ -93,7 +95,7 @@
       btn.classList.toggle("is-active", btn.getAttribute("data-go") === screenId);
     });
     if (screenId === "screen-home") renderHome();
-    if (screenId === "screen-passport") renderPassport();
+    if (screenId === "screen-passport") { renderPassport(); armCoverAutoOpen(); }
     if (screenId === "screen-area") renderArea();
     if (screenId === "screen-gallery") renderGallery();
     if (screenId === "screen-profile") renderProfile();
@@ -283,13 +285,38 @@
     });
     q("#btn-passport-next").addEventListener("click", (e) => {
       e.stopPropagation();
-      switchView("map");
-      q("#passport-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+      openCoverAndReveal();
     });
+    q("#passport-cover").addEventListener("click", () => openCoverAndReveal());
   }
+
+  // ---------------- passport cover "book opens automatically" animation ----------------
+
+  function armCoverAutoOpen() {
+    clearTimeout(coverAutoTimer);
+    coverIsOpen = false;
+    if (q("#mission-list").style.display === "flex") return; // already viewing the mission list
+    const cover = q("#passport-cover");
+    cover.classList.remove("is-opening");
+    cover.style.display = "block";
+    coverAutoTimer = setTimeout(openCoverAndReveal, 900);
+  }
+
+  function openCoverAndReveal() {
+    clearTimeout(coverAutoTimer);
+    const cover = q("#passport-cover");
+    if (coverIsOpen || cover.classList.contains("is-opening")) return;
+    coverIsOpen = true;
+    cover.classList.add("is-opening");
+    setTimeout(() => {
+      cover.style.display = "none";
+      q("#passport-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 680);
+  }
+
   function switchView(view) {
     q("#btn-toggle-missions").setAttribute("aria-expanded", view === "list" ? "true" : "false");
-    q("#passport-cover").style.display = view === "map" ? "block" : "none";
+    q("#passport-cover").style.display = (view === "map" && !coverIsOpen) ? "block" : "none";
     q("#passport-wrap").style.display = view === "map" ? "block" : "none";
     const ev = SW.getEvent(currentEventId);
     q("#open-scanner").style.display = (view === "map" && ev && ev.active) ? "flex" : "none";
