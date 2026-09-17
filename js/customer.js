@@ -28,6 +28,7 @@
   let cameraStream = null;
   let coverAutoTimer = null;
   let coverIsOpen = false; // has the passport cover already played its open animation this visit
+  let coverFinishHandler = null; // the currently-armed animationend listener, so a re-entry can clean it up
 
   function q(sel, root) { return (root || document).querySelector(sel); }
   function qa(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
@@ -295,8 +296,12 @@
   function armCoverAutoOpen() {
     clearTimeout(coverAutoTimer);
     coverIsOpen = false;
-    if (q("#mission-list").style.display === "flex") return; // already viewing the mission list
     const cover = q("#passport-cover");
+    if (coverFinishHandler) {
+      cover.removeEventListener("animationend", coverFinishHandler);
+      coverFinishHandler = null;
+    }
+    if (q("#mission-list").style.display === "flex") return; // already viewing the mission list
     cover.classList.remove("is-opening");
     cover.style.display = "block";
     coverAutoTimer = setTimeout(openCoverAndReveal, 900);
@@ -307,11 +312,18 @@
     const cover = q("#passport-cover");
     if (coverIsOpen || cover.classList.contains("is-opening")) return;
     coverIsOpen = true;
-    cover.classList.add("is-opening");
-    setTimeout(() => {
+
+    const finish = () => {
       cover.style.display = "none";
       q("#passport-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 680);
+    };
+
+    const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) { finish(); return; }
+
+    coverFinishHandler = finish;
+    cover.addEventListener("animationend", finish, { once: true });
+    cover.classList.add("is-opening");
   }
 
   function switchView(view) {
