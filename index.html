@@ -53,13 +53,6 @@
         <div class="profile-card__chevron"><span data-icon="chevron"></span></div>
       </div>
 
-      <div class="menu-grid">
-        <div class="menu-grid__item" id="menu-ban"><span class="menu-grid__icon" data-icon-color="tire"></span>Ban</div>
-        <div class="menu-grid__item" id="menu-oli"><span class="menu-grid__icon" data-icon-color="oil"></span>Oli</div>
-        <div class="menu-grid__item" id="menu-servis"><span class="menu-grid__icon" data-icon-color="wrench"></span>Servis Lainnya</div>
-        <div class="menu-grid__item" id="menu-bengkel"><span class="menu-grid__icon" data-icon-color="garage"></span>Bengkel</div>
-      </div>
-
       <div class="banner" id="banner-install">
         <div class="banner__icon"><span data-icon="download"></span></div>
         <div>
@@ -111,15 +104,39 @@
   <section class="screen" id="screen-passport">
     <div class="topbar">
       <button class="topbar__back" data-go="screen-home"><span data-icon="back"></span></button>
-      <div class="topbar__title" id="passport-topbar-title">SpeedPassport</div>
-      <button class="btn btn--pill-sm" id="btn-switch-event" style="margin-left:auto">Ganti Event</button>
+      <div style="flex:1"></div>
+      <button class="event-pill" id="btn-switch-event"><span id="passport-topbar-title">IMOS 2026</span><span data-icon="chevron" style="transform:rotate(90deg)"></span></button>
     </div>
     <div class="screen__scroll">
       <div class="event-status" id="event-status-banner" style="display:none">
         <span data-icon="check"></span> <span id="event-status-text">Event ini sudah selesai</span>
       </div>
 
-      <div class="passport-wrap">
+      <div class="passport-hero">
+        <div class="passport-hero__top">
+          <div class="passport-hero__title">SPEED<b>PASSPORT</b></div>
+          <div class="passport-hero__desc">Kumpulkan semua stamp dan dapatkan hadiah menarik</div>
+        </div>
+        <div class="passport-hero__progress-row">
+          <span>Progress stamp</span>
+          <span id="passport-progress-num">1 dari 9</span>
+        </div>
+        <div class="progress-strip__bar">
+          <div class="progress-strip__fill" id="passport-progress-fill" style="width:0%"></div>
+        </div>
+        <button class="passport-hero__missions" id="btn-toggle-missions">Misi saya<span data-icon="chevron" id="missions-chevron" style="transform:rotate(90deg)"></span></button>
+      </div>
+
+      <div class="passport-cover" id="passport-cover">
+        <img class="passport-cover__mark" src="assets/speedwork-mark.png" alt="">
+        <button class="passport-cover__next" id="btn-passport-next">Selanjutnya <span data-icon="chevron"></span></button>
+        <div class="passport-cover__foot">
+          <div class="passport-cover__wordmark">SPEED<b>PASSPORT</b></div>
+          <div class="passport-cover__name" id="passport-cover-name">-</div>
+        </div>
+      </div>
+
+      <div class="passport-wrap" id="passport-wrap">
         <div class="passport-board" id="passport-board">
           <div class="passport-board__head">
             <div class="passport-board__event" id="passport-book-event">IMOS 2026</div>
@@ -136,11 +153,6 @@
           <div class="scan-cta__title">Scan QR di Booth</div>
           <div class="scan-cta__desc" id="scan-cta-desc">Tunjukkan ke PIC, lalu scan QR yang mereka tampilkan</div>
         </div>
-      </div>
-
-      <div class="viewtabs">
-        <button class="is-active" id="tab-map" data-view="map">Papan Stamp</button>
-        <button id="tab-list" data-view="list">Misi Saya</button>
       </div>
 
       <div class="mission-list" id="mission-list" style="display:none"></div>

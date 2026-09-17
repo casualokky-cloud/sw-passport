@@ -232,17 +232,6 @@ button { font-family: inherit; }
 .profile-card__id { font-size: 11.5px; opacity: .85; letter-spacing: .02em; }
 .profile-card__chevron { margin-left: auto; opacity: .8; }
 
-.menu-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  margin-top: 16px;
-}
-.menu-grid__item {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 500; color: var(--color-text-paragraf); text-align: center;
-  cursor: pointer;
-}
-.menu-grid__icon { width: 44px; height: 44px; }
-
 .banner {
   display: flex; align-items: center; gap: 12px; padding: 12px 14px;
   border-radius: var(--r-12); border: 1px solid var(--line); background: #fff; margin-top: 10px;
@@ -312,9 +301,77 @@ button { font-family: inherit; }
   display: flex; align-items: center; gap: 8px;
 }
 
+/* ---------- Passport screen header (SPEED PASSPORT hero + cover card) ---------- */
+
+.event-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; border-radius: 999px; padding: 8px 14px;
+  background: var(--tint-green-1); color: var(--brand-dark);
+  font-weight: 600; font-size: 13px; cursor: pointer;
+}
+
+.passport-hero { padding: 4px 2px 0; }
+.passport-hero__top {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+}
+.passport-hero__title {
+  font-family: "Lexend", "Albert Sans", sans-serif;
+  font-weight: 300; font-size: 19px; color: var(--color-text-title); line-height: 1.15;
+}
+.passport-hero__title b { display: block; font-weight: 700; font-size: 22px; }
+.passport-hero__desc {
+  font-size: 12px; color: var(--color-text-subtitle); line-height: 1.4; max-width: 42%; text-align: right;
+}
+.passport-hero__progress-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--color-text-subtitle); margin-top: 16px; margin-bottom: 8px;
+}
+.passport-hero__progress-row span:first-child { color: var(--color-text-title); font-weight: 500; }
+.passport-hero__missions {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 14px auto 0; border: none; border-radius: 999px; padding: 9px 20px;
+  background: linear-gradient(180deg, #2BBE98 0%, #007456 100%);
+  color: #fff; font-weight: 500; font-size: 13.5px; cursor: pointer;
+}
+.passport-hero__missions[aria-expanded="true"] #missions-chevron { transform: rotate(-90deg) !important; }
+
+.passport-cover {
+  position: relative; overflow: hidden;
+  margin-top: 18px; padding: 20px 18px 34px;
+  min-height: 190px;
+  border-radius: var(--r-24);
+  background: radial-gradient(120% 140% at 100% 0%, var(--brand-light) 0%, var(--brand-dark) 70%);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+.passport-cover::after {
+  content: ""; position: absolute; right: -30px; top: -20px; width: 200px; height: 200px;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255,255,255,.07) 0deg 8deg, transparent 8deg 24deg);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.passport-cover__mark { position: relative; width: 46px; height: 46px; display: block; }
+.passport-cover__foot { position: relative; margin-top: 34px; }
+.passport-cover__wordmark {
+  font-family: "Lexend", "Albert Sans", sans-serif; font-weight: 300; font-size: 20px;
+  color: #fff; letter-spacing: .02em;
+}
+.passport-cover__wordmark b { font-weight: 700; }
+.passport-cover__name {
+  font-size: 12px; color: rgba(255,255,255,.85); margin-top: 2px; letter-spacing: .08em; text-transform: uppercase;
+}
+.passport-cover__next {
+  position: absolute; right: 16px; bottom: -16px;
+  display: flex; align-items: center; gap: 6px;
+  border: none; border-radius: 999px; padding: 9px 16px;
+  background: #fff; color: var(--btn-green-label);
+  font-weight: 600; font-size: 12.5px; box-shadow: 0 6px 16px rgba(0,0,0,.16); cursor: pointer;
+}
+
 /* ---------- SpeedPassport board (the passport page) ---------- */
 
-.passport-wrap { position: relative; margin-top: 4px; }
+.passport-wrap { position: relative; margin-top: 28px; }
 .passport-board {
   border-radius: var(--r-24);
   background: linear-gradient(180deg, #fff, var(--component-container));
@@ -445,13 +502,6 @@ button { font-family: inherit; }
   display: flex; align-items: center; justify-content: center; color: transparent;
 }
 .mission-item.is-done .mission-item__check { background: var(--btn-green); border-color: var(--btn-green); color: #fff; }
-
-.viewtabs { display: flex; background: var(--tint-green-1); border-radius: 999px; padding: 4px; margin-top: 16px; }
-.viewtabs button {
-  flex: 1; border: none; background: transparent; padding: 9px 0; border-radius: 999px;
-  font-weight: 600; font-size: 12.5px; color: var(--brand-dark); cursor: pointer;
-}
-.viewtabs button.is-active { background: var(--btn-green); color: #fff; }
 
 /* ---------- Bottom nav ---------- */
 

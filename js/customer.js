@@ -173,12 +173,8 @@
   function initHomeHandlers() {
     q("#profile-card").addEventListener("click", () => goTo("screen-profile"));
     q("#open-passport").addEventListener("click", () => openEventPassport(SW.getActiveEvent().id));
-    q("#menu-bengkel").addEventListener("click", () => goTo("screen-area"));
     q("#btn-notif-bell").addEventListener("click", () => toast("Belum ada notifikasi baru"));
     q("#btn-cart").addEventListener("click", () => toast("Keranjang kosong"));
-    ["menu-ban", "menu-oli", "menu-servis"].forEach(id => {
-      q("#" + id).addEventListener("click", () => toast("Fitur ini di luar cakupan demo SpeedPassport"));
-    });
 
     q("#btn-install").addEventListener("click", () => {
       const u = SW.getCurrentUser();
@@ -212,6 +208,16 @@
     q("#passport-book-sub").textContent = ev.active
       ? "Tap stamp untuk info lebih lanjut"
       : `${ev.subtitle} · ${ev.dateLabel}`;
+    q("#passport-cover-name").textContent = u.name;
+
+    const total = SW.STAMPS.length;
+    const done = SW.stampCount(u, ev.id);
+    q("#passport-progress-num").textContent = `${done} dari ${total}`;
+    const heroFill = q("#passport-progress-fill");
+    heroFill.style.width = `${Math.round((done / total) * 100)}%`;
+    if (done === 0) heroFill.style.background = "var(--progress-start)";
+    else if (done < total) heroFill.style.background = `linear-gradient(90deg, var(--progress-start), var(--progress-mid))`;
+    else heroFill.style.background = `linear-gradient(90deg, var(--progress-start), var(--progress-mid), var(--progress-full))`;
 
     const statusBanner = q("#event-status-banner");
     q("#passport-board").classList.toggle("is-closed", !ev.active);
@@ -271,13 +277,20 @@
   }
 
   function initViewTabs() {
-    q("#tab-map").addEventListener("click", () => switchView("map"));
-    q("#tab-list").addEventListener("click", () => switchView("list"));
+    q("#btn-toggle-missions").addEventListener("click", () => {
+      const isList = q("#mission-list").style.display === "flex";
+      switchView(isList ? "map" : "list");
+    });
+    q("#btn-passport-next").addEventListener("click", (e) => {
+      e.stopPropagation();
+      switchView("map");
+      q("#passport-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
   function switchView(view) {
-    q("#tab-map").classList.toggle("is-active", view === "map");
-    q("#tab-list").classList.toggle("is-active", view === "list");
-    q(".passport-wrap").style.display = view === "map" ? "block" : "none";
+    q("#btn-toggle-missions").setAttribute("aria-expanded", view === "list" ? "true" : "false");
+    q("#passport-cover").style.display = view === "map" ? "block" : "none";
+    q("#passport-wrap").style.display = view === "map" ? "block" : "none";
     const ev = SW.getEvent(currentEventId);
     q("#open-scanner").style.display = (view === "map" && ev && ev.active) ? "flex" : "none";
     q("#mission-list").style.display = view === "list" ? "flex" : "none";
